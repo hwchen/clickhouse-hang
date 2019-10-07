@@ -1,4 +1,4 @@
-port = "9001"
+port = "9000"
 
 # pool_max=1; to run with different port: `just port=9000 run`
 run_1:
