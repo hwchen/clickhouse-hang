@@ -67,3 +67,8 @@ database error: Driver error: `Timeout error.`
 ```
 
 So here, somehow clichouse-rs enters the `reconnect` logic, not sure why.
+
+## 2nd pass
+using clickhouse-rs 0.1.14
+
+Same logs as above, except that there's never a timeout error.
