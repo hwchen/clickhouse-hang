@@ -51,6 +51,7 @@ Server logging is the same.
 
 Client logging:
 ```
+press enter to run query:
 [2019-10-07T17:54:31Z INFO  clickhouse_rs] [hello] -> Context { options: Options { addr: Url("localhost:9000"), database: "default", username: "default", password: "", compression: false, pool_min: 1, pool_max: 1, nodelay: true, keepalive: None, ping_before_query: true, send_retries: 3, retry_timeout: 5s, ping_timeout: 500ms, connection_timeout: 500ms, query_timeout: Some(180s), query_block_timeout: Some(180s), insert_timeout: Some(180s), execute_timeout: Some(180s) }, hostname: "mochi" }
 [2019-10-07T17:54:31Z INFO  clickhouse_rs] [hello] <- ClickHouse 19.4.54416 (America/Montreal)
 [2019-10-07T17:54:31Z INFO  clickhouse_rs] [ping]
