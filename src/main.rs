@@ -1,4 +1,4 @@
-use clickhouse_rs::Pool;
+use clickhouse_rs::{errors::Error, Pool};
 use futures::Future;
 use std::io::{stdin, stdout, Write};
 
@@ -12,25 +12,27 @@ fn main() {
 
     let pool = Pool::new(database_uri);
 
-    let mut buf = String::new();
+    let buf = String::new();
 
-    loop {
-        print!("press enter to run query:");
-        stdout().flush().expect("could not flush stdout");
+    tokio::run(loop_(pool, buf).map_err(|err| println!("database error: {}", err)));
+}
 
-        stdin()
-            .read_line(&mut buf)
-            .expect("could not read line from stdin");
+fn loop_(pool: Pool, mut buf: String) -> Box<dyn Future<Item = (), Error = Error> + Send> {
+    print!("press enter to run query:");
+    stdout().flush().expect("could not flush stdout");
 
-        let fut = pool
-            .get_handle()
-            .and_then(move |c| c.query("select 1;").fetch_all())
-            .and_then(move |(_, block)| {
-                println!("query success: {:?}", block);
-                Ok(())
-            })
-            .map_err(|err| println!("database error: {}", err));
+    stdin()
+        .read_line(&mut buf)
+        .expect("could not read line from stdin");
 
-        tokio::run(fut);
-    }
+    let fut = pool
+        .get_handle()
+        .and_then(move |c| c.query("select 1;").fetch_all())
+        .and_then(move |(_, block)| {
+            println!("query success: {:?}", block);
+            Ok(())
+        })
+        .and_then(move |_| loop_(pool, buf));
+
+    Box::new(fut)
 }
