@@ -1,4 +1,4 @@
-if you have the `just` taskrunner, you can use `just run_1`. Otherwise, just use ` cargo build && RUST_LOG=info target/debug/clickhouse-hang 'tcp://localhost:{{port}}?pool_max=1&pool_min=1'`.
+if you have the `just` taskrunner, you can use `just run_1`. Otherwise, just use ` cargo build && RUST_LOG=info target/debug/clickhouse-hang 'tcp://localhost:9000?pool_max=1&pool_min=1'`.
 
 ## First pass - weird behavior even without disconnect/reconnect
 Using the `just run_1` command.
