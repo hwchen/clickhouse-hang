@@ -6,7 +6,7 @@ fn main() {
     // Important: set pool_max and pool_min to 1
     //let database_url = "tcp://localhost:9001?pool_max=1&pool_min=1";
 
-    //env_logger::init();
+    env_logger::init();
 
     let database_uri = std::env::args().nth(1).expect("please enter db uri");
 

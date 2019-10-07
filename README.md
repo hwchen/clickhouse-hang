@@ -38,3 +38,30 @@ Does this work in an async pool with several connections because:
 This doesn't answer the issue of ultimate hanging though, because in this case the hanging is only temporary, and soon cleared by a db error timeout.
 
 Oh, but this is on v0.1.16. What happens on 0.1.14?
+
+(also, this pass didn't have logging because of plane lack of wifi)
+
+## First pass (clickhouse-rs 0.1.16) with better client logging
+
+Server logging is the same.
+
+Client logging:
+```
+[2019-10-07T17:54:31Z INFO  clickhouse_rs] [hello] -> Context { options: Options { addr: Url("localhost:9000"), database: "default", username: "default", password: "", compression: false, pool_min: 1, pool_max: 1, nodelay: true, keepalive: None, ping_before_query: true, send_retries: 3, retry_timeout: 5s, ping_timeout: 500ms, connection_timeout: 500ms, query_timeout: Some(180s), query_block_timeout: Some(180s), insert_timeout: Some(180s), execute_timeout: Some(180s) }, hostname: "mochi" }
+[2019-10-07T17:54:31Z INFO  clickhouse_rs] [hello] <- ClickHouse 19.4.54416 (America/Montreal)
+[2019-10-07T17:54:31Z INFO  clickhouse_rs] [ping]
+[2019-10-07T17:54:31Z INFO  clickhouse_rs] [pong]
+[2019-10-07T17:54:31Z INFO  clickhouse_rs::types::query_result] [send query] select 1;
+query success: 
+┌───┐
+│ 1 │
+├───┤
+│ 1 │
+└───┘
+press enter to run query:
+[2019-10-07T17:54:43Z INFO  clickhouse_rs] [ping]
+[2019-10-07T17:54:43Z WARN  clickhouse_rs] [reconnect]
+database error: Driver error: `Timeout error.`
+```
+
+So here, somehow clichouse-rs enters the `reconnect` logic, not sure why.
