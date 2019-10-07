@@ -1,4 +1,5 @@
 ## First pass - weird behavior even without disconnect/reconnect
+Using the `just run_1` command.
 
 Done without logging, so not quite sure about clickhouse behavior
 
@@ -42,6 +43,7 @@ Oh, but this is on v0.1.16. What happens on 0.1.14?
 (also, this pass didn't have logging because of plane lack of wifi)
 
 ## First pass (clickhouse-rs 0.1.16) with better client logging
+Using the `just run_1` command.
 
 Server logging is the same.
 
